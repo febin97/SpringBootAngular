@@ -1,0 +1,43 @@
+<br>
+<div class="jumbotron">   
+    <section class="row">
+        <div class="col-md-7">
+            <h1>{{movie.title}}</h1>
+            <h6>{{movie.tagline}}</h6><hr><br>
+            <p>{{movie.overview}}</p><br>
+            <div style="text-align: center">
+                <h6>Release Date : {{movie.release_date}}</h6>
+                <h6>Revenue : {{movie.revenue}}</h6>
+                <h6>Run Time : {{movie.runtime}}</h6>
+                <h6>Vote Count : {{movie.vote_count}}</h6>
+                <h6>Vote Average : {{movie.vote_average}}</h6>
+                <h6>Popularity : {{movie.popularity}}</h6>
+                <div *ngIf = "!isFav; else other_content" >
+                    <button (click) = "addToFavourites(movie.id,movie.poster_path,movie.title)" class="btn btn-dark">Add To Favourites</button>
+                </div>
+                <ng-template #other_content>
+                    <div class="form-group">
+                        <ul>Comment: 
+                                <div *ngIf = "favObj.comment && !tobeEdited"> *{{favObj.comment}}
+                                    <button style="float: right;" (click) = "deleteComment(favObj)" class="btn btn-dark">Delete</button>
+                                    <button style="float: right;" (click) = "editComment()" class="btn btn-dark">Edit</button>
+                                </div>
+                                <div *ngIf = "tobeEdited">
+                                    <input #commentValEdit type="text" value="{{favObj.comment}}" style="color: black;background: gray">
+                                    <button (click) = editTheComment(favObj,commentValEdit.value) class="btn btn-dark">Edit</button>
+                                </div><p></p>
+                        </ul>
+                        <div *ngIf="!isComment" class="row">
+                            <input class = "col-md-9 form-control" [(ngModel)] = "commentVal" type="text"><br>
+                            <button class=" col-md-3 btn btn-dark form-control" (click) = "addComment(favObj)">Add Comments</button>
+                        </div>
+                    </div>
+                    <button (click) = "removeFromFav(movie.id)" class="btn btn-dark">Remove From Favourites</button>
+                </ng-template>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <img src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}" alt = "No image" style="height: 30rem;width: 90%">
+        </div>
+    </section>
+</div>
